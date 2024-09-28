@@ -1,0 +1,176 @@
+using System;
+
+
+namespace Chapter04
+{
+    // 1. Employee Class
+    class Employee
+    {
+        public int EmployeeNumber { get; set; }
+        public string Name { get; set; }
+        public DateTime DateOfHire { get; set; }
+        public string JobDescription { get; set; }
+        public string Department { get; set; }
+        public decimal MonthlySalary { get; set; }
+
+        // Constructors
+        public Employee() { }
+        public Employee(int employeeNumber) => EmployeeNumber = employeeNumber;
+        public Employee(int employeeNumber, string name) => (EmployeeNumber, Name) = (employeeNumber, name);
+        public Employee(int employeeNumber, string name, DateTime dateOfHire, string jobDescription, string department, decimal monthlySalary)
+        {
+            EmployeeNumber = employeeNumber;
+            Name = name;
+            DateOfHire = dateOfHire;
+            JobDescription = jobDescription;
+            Department = department;
+            MonthlySalary = monthlySalary;
+        }
+
+        // Override ToString
+        public override string ToString() => $"Employee Number: {EmployeeNumber}, Name: {Name}, Date of Hire: {DateOfHire.ToShortDateString()}, Job: {JobDescription}, Department: {Department}, Monthly Salary: {MonthlySalary:C}";
+    }
+
+    // 2. Receipt Class
+    class Receipt
+    {
+        public int ReceiptNumber { get; set; }
+        public DateTime DateOfPurchase { get; set; }
+        public int CustomerNumber { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerAddress { get; set; }
+        public string CustomerPhoneNumber { get; set; }
+        public int ItemNumber { get; set; }
+        public string Description { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int QuantityPurchased { get; set; }
+
+        // Constructor
+        public Receipt() { }
+        public Receipt(int receiptNumber, DateTime dateOfPurchase, int customerNumber, string customerName, string customerAddress, string customerPhoneNumber, int itemNumber, string description, decimal unitPrice, int quantityPurchased)
+        {
+            ReceiptNumber = receiptNumber;
+            DateOfPurchase = dateOfPurchase;
+            CustomerNumber = customerNumber;
+            CustomerName = customerName;
+            CustomerAddress = customerAddress;
+            CustomerPhoneNumber = customerPhoneNumber;
+            ItemNumber = itemNumber;
+            Description = description;
+            UnitPrice = unitPrice;
+            QuantityPurchased = quantityPurchased;
+        }
+
+        public decimal CalculateTotalCost() => UnitPrice * QuantityPurchased;
+
+        // Override ToString
+        public override string ToString() => $"Receipt: {ReceiptNumber}, Date: {DateOfPurchase.ToShortDateString()}, Customer: {CustomerName}, Item: {Description}, Total Cost: {CalculateTotalCost():C}";
+    }
+
+    // 3. Date Class
+    class Date
+    {
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int Day { get; set; }
+        public string MonthName { get; private set; }
+
+        // Constructor
+        public Date(int year, int month, int day)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+            MonthName = GetMonthName(month);
+        }
+
+        public string GetMonthName(int month) => new DateTime(Year, month, 1).ToString("MMMM");
+
+        // Override ToString
+        public override string ToString() => $"{MonthName} {Day}, {Year}";
+    }
+
+    // 4. SalesEmployee Class
+    class SalesEmployee
+    {
+        public string Name { get; set; }
+        public decimal TotalSales { get; set; }
+        private const decimal COMMISSION_RATE = 0.07M;
+        private const decimal FEDERAL_TAX_RATE = 0.18M;
+        private const decimal RETIREMENT_RATE = 0.10M;
+        private const decimal SOCIAL_SECURITY_RATE = 0.06M;
+
+        // Constructor
+        public SalesEmployee(string name, decimal totalSales)
+        {
+            Name = name;
+            TotalSales = totalSales;
+        }
+
+        public decimal CalculateCommission() => TotalSales * COMMISSION_RATE;
+        public decimal CalculateFederalTax() => CalculateCommission() * FEDERAL_TAX_RATE;
+        public decimal CalculateRetirement() => CalculateCommission() * RETIREMENT_RATE;
+        public decimal CalculateSocialSecurity() => CalculateCommission() * SOCIAL_SECURITY_RATE;
+        public decimal CalculateTakeHomePay() => CalculateCommission() - (CalculateFederalTax() + CalculateRetirement() + CalculateSocialSecurity());
+
+        // Override ToString
+        public override string ToString() => $"Sales Employee: {Name}, Total Sales: {TotalSales:C}, Take-Home Pay: {CalculateTakeHomePay():C}";
+    }
+
+    // 5. ProfessorRating Class
+    class ProfessorRating
+    {
+        public int ProfessorID { get; }
+        public int EasinessRating { get; set; }
+        public int HelpfulnessRating { get; set; }
+        public int ClarityRating { get; set; }
+
+        // Constructor
+        public ProfessorRating(int professorID, int easinessRating, int helpfulnessRating, int clarityRating)
+        {
+            ProfessorID = professorID;
+            EasinessRating = easinessRating;
+            HelpfulnessRating = helpfulnessRating;
+            ClarityRating = clarityRating;
+        }
+
+        public double CalculateOverallRating() => (EasinessRating + HelpfulnessRating + ClarityRating) / 3.0;
+
+        // Override ToString
+        public override string ToString() => $"Professor ID: {ProfessorID}, Easiness: {EasinessRating}, Helpfulness: {HelpfulnessRating}, Clarity: {ClarityRating}, Overall Rating: {CalculateOverallRating():F2}";
+    }
+
+    // Main method to test the classes
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Test Employee class with a specific hire date
+            DateTime hireDate = new DateTime(1843, 11, 27); // November 27, 1843
+            Employee employee = new Employee(1, "Ada Lovelace", hireDate, "Programer", "IT", 5000);
+            Console.WriteLine(employee);
+            Console.WriteLine(); // Blank line for separation
+
+            // Test Receipt class with a specific purchase date
+            DateTime purchaseDate = new DateTime(1961, 10, 5); // October 5, 1961
+            Receipt receipt = new Receipt(101, purchaseDate, 202, "Audrey Hepburn", "48 Rue Keyenveld", "555-1234", 555, "Brake Pads and Blinker Fluid", 50.00M, 4);
+            Console.WriteLine(receipt);
+            Console.WriteLine(); // Blank line for separation
+
+            // Test Date class
+            Date date = new Date(1991, 9, 26); // September 26, 1991
+            Console.WriteLine(date);
+            Console.WriteLine(); // Blank line for separation
+
+            // Test SalesEmployee class
+            SalesEmployee salesEmployee = new SalesEmployee("Dwayne 'The Rock' Johnson", 10000.00M);
+            Console.WriteLine(salesEmployee);
+            Console.WriteLine(); // Blank line for separation
+
+            // Test ProfessorRating class
+            ProfessorRating professor = new ProfessorRating(101, 5, 4, 3);
+            Console.WriteLine(professor);
+            Console.WriteLine(); // Blank line for separation
+        }
+    }
+}
