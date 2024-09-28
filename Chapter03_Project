@@ -1,0 +1,148 @@
+using System;
+
+namespace Chapter03
+{
+    class Program
+    {
+        public static void Main()
+        {
+            // Assignment 1: Message Display Application
+            Console.WriteLine("Assignment 1: Message Display Application");
+            string name = GetInputString("Please enter your name:");
+            string saying = GetInputString("Please enter your favorite saying:");
+            DisplayMessage(name, saying);
+            PauseScreen();
+
+            // Assignment 2: Rectangle Area, Perimeter, and Diagonal
+            Console.WriteLine("Assignment 2: Rectangle Area, Perimeter, and Diagonal");
+            double height = GetInputDouble("Enter the height of the rectangle:");
+            double width = GetInputDouble("Enter the width of the rectangle:");
+            double area = CalculateArea(height, width);
+            double perimeter = CalculatePerimeter(height, width);
+            double diagonal = CalculateDiagonal(height, width);
+            DisplayRectangleResults(area, perimeter, diagonal);
+            PauseScreen();
+
+            // Assignment 3: Seconds Conversion
+            Console.WriteLine("Assignment 3: Seconds Conversion");
+            int totalSeconds = GetInputInt("Enter the total seconds:");
+            ConvertSeconds(totalSeconds);
+            PauseScreen();
+
+            // Assignment 4: Tip Calculation
+            Console.WriteLine("Assignment 4: Tip Calculation");
+            double totalBeforeTax = GetInputDouble("Enter the total bill before taxes:");
+            CalculateTips(totalBeforeTax);
+            PauseScreen();
+
+            // Assignment 5: Sales Employee Take-Home Pay
+            Console.WriteLine("Assignment 5: Sales Employee Take-Home Pay");
+            string employeeName = GetInputString("Enter the employee's name:");
+            double salesAmount = GetInputDouble("Enter the sales amount for the week:");
+            CalculatePay(employeeName, salesAmount);
+            PauseScreen();
+        }
+
+        // Common method to pause the screen
+        private static void PauseScreen()
+        {
+            Console.WriteLine("\nPress any key to continue to the next assignment...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        // Assignment 1 Methods
+        private static string GetInputString(string prompt)
+        {
+            Console.WriteLine(prompt);
+            return Console.ReadLine();
+        }
+
+        private static void DisplayMessage(string name, string saying)
+        {
+            Console.WriteLine($">>>>>>>>>>>>>>>>>>>>>>");
+            Console.WriteLine($"{name} says: \"{saying}\"");
+            Console.WriteLine($"<<<<<<<<<<<<<<<<<<<<<<");
+        }
+
+        // Assignment 2 Methods
+        private static double GetInputDouble(string prompt)
+        {
+            Console.WriteLine(prompt);
+            return Convert.ToDouble(Console.ReadLine());
+        }
+
+        private static double CalculateArea(double height, double width) => height * width;
+
+        private static double CalculatePerimeter(double height, double width) => 2 * (height + width);
+
+        private static double CalculateDiagonal(double height, double width) => Math.Sqrt(height * height + width * width);
+
+        private static void DisplayRectangleResults(double area, double perimeter, double diagonal)
+        {
+            Console.WriteLine("\nResults:");
+            Console.WriteLine($"Area: {area}");
+            Console.WriteLine($"Perimeter: {perimeter}");
+            Console.WriteLine($"Diagonal: {diagonal}");
+        }
+
+        // Assignment 3 Methods
+        private static int GetInputInt(string prompt)
+        {
+            Console.WriteLine(prompt);
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private static void ConvertSeconds(int totalSeconds)
+        {
+            int hours = totalSeconds / 3600;
+            int minutes = (totalSeconds % 3600) / 60;
+            int seconds = totalSeconds % 60;
+
+            Console.WriteLine($"\n{totalSeconds} seconds is equivalent to:");
+            Console.WriteLine($"{hours} hours, {minutes} minutes, and {seconds} seconds");
+        }
+
+        // Assignment 4 Methods
+        private const double TAX_RATE = 0.09;
+
+        private static void CalculateTips(double totalBeforeTax)
+        {
+            double totalWithTax = totalBeforeTax + (totalBeforeTax * TAX_RATE);
+            double tip15 = totalWithTax * 0.15;
+            double tip20 = totalWithTax * 0.20;
+
+            Console.WriteLine($"\nBill before tax: {totalBeforeTax:C}");
+            Console.WriteLine($"Bill after tax: {totalWithTax:C}");
+            Console.WriteLine($"Tip (15%): {tip15:C}");
+            Console.WriteLine($"Total with 15% tip: {totalWithTax + tip15:C}");
+            Console.WriteLine($"Tip (20%): {tip20:C}");
+            Console.WriteLine($"Total with 20% tip: {totalWithTax + tip20:C}");
+        }
+
+        // Assignment 5 Methods
+        private const double COMMISSION_RATE = 0.07;
+        private const double FEDERAL_TAX_RATE = 0.18;
+        private const double RETIREMENT_RATE = 0.15;
+        private const double SOCIAL_SECURITY_RATE = 0.09;
+
+        private static void CalculatePay(string employeeName, double salesAmount)
+        {
+            double commission = salesAmount * COMMISSION_RATE;
+            double federalTax = commission * FEDERAL_TAX_RATE;
+            double retirement = commission * RETIREMENT_RATE;
+            double socialSecurity = commission * SOCIAL_SECURITY_RATE;
+            double totalDeductions = federalTax + retirement + socialSecurity;
+            double takeHomePay = commission - totalDeductions;
+
+            Console.WriteLine($"\nEmployee: {employeeName}");
+            Console.WriteLine($"Sales Amount: {salesAmount:C}");
+            Console.WriteLine($"Commission (7%): {commission:C}");
+            Console.WriteLine($"Federal Tax (18%): {federalTax:C}");
+            Console.WriteLine($"Retirement (15%): {retirement:C}");
+            Console.WriteLine($"Social Security (9%): {socialSecurity:C}");
+            Console.WriteLine($"Total Deductions: {totalDeductions:C}");
+            Console.WriteLine($"Take-Home Pay: {takeHomePay:C}");
+        }
+    }
+}
