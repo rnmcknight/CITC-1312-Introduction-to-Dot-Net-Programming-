@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+
+namespace ChutesAndLadders
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int simulations1 = 100;
+            int simulations2 = 10000;
+
+            RunSimulation(simulations1);
+            RunSimulation(simulations2);
+        }
+
+        static void RunSimulation(int numSimulations)
+        {
+            int maxTurns = 0;
+            int minTurns = int.MaxValue;
+            int totalTurns = 0;
+
+            Dictionary<int, int> board = GetBoardSetup();
+
+            Random random = new Random();
+
+            for (int i = 0; i < numSimulations; i++)
+            {
+                int turns = PlayGame(board, random);
+                maxTurns = Math.Max(maxTurns, turns);
+                minTurns = Math.Min(minTurns, turns);
+                totalTurns += turns;
+            }
+
+            double averageTurns = (double)totalTurns / numSimulations;
+
+            Console.WriteLine($"For {numSimulations} games:");
+            Console.WriteLine($"Maximum Turns: {maxTurns}");
+            Console.WriteLine($"Minimum Turns: {minTurns}");
+            Console.WriteLine($"Average Turns: {averageTurns:F2}");
+        }
+
+        static int PlayGame(Dictionary<int, int> board, Random random)
+        {
+            int position = 1;
+            int turns = 0;
+
+            while (position < 100)
+            {
+                int roll = random.Next(1, 7);  // Roll between 1 and 6
+                position += roll;
+
+                if (position > 100)
+                {
+                    position = 100;  // Adjust if going beyond 100
+                }
+
+                if (board.ContainsKey(position))
+                {
+                    position = board[position];  // Move if on a chute or ladder
+                }
+
+                turns++;
+            }
+
+            return turns;
+        }
+
+        static Dictionary<int, int> GetBoardSetup()
+        {
+            return new Dictionary<int, int>
+            {
+                // Ladders: from lower number to higher number
+                { 3, 22 },
+                { 5, 8 },
+                { 11, 26 },
+                { 20, 29 },
+                { 27, 84 },
+                { 36, 44 },
+                { 51, 67 },
+                { 71, 91 },
+                { 80, 100 },
+
+                // Chutes: from higher number to lower number
+                { 16, 6 },
+                { 47, 26 },
+                { 49, 11 },
+                { 56, 53 },
+                { 62, 19 },
+                { 64, 60 },
+                { 87, 24 },
+                { 93, 73 },
+                { 95, 75 },
+                { 98, 78 }
+            };
+        }
+    }
+}
