@@ -1,0 +1,58 @@
+using System;
+
+namespace Chapter01
+{
+
+    class Program
+    {
+
+
+        static void Main(string[] args)
+        {
+
+            //Output the standard Hello World
+            // Exercise 1: Name
+            Console.WriteLine("Hello World!");
+            Console.WriteLine(); // Blank line for Separation
+
+            //Add my name to it
+            Console.WriteLine("Hello World!  My name is Rebekah McKnight");
+            Console.WriteLine(); // Blank line for separation
+
+            // Exercise 2: Format C#
+            Console.WriteLine("CCCCCCCCCCCCCCCCC");
+            Console.WriteLine("CC                #    #");
+            Console.WriteLine("CC            ##############");
+            Console.WriteLine("CC                #    #");
+            Console.WriteLine("CC                #    #");
+            Console.WriteLine("CC             ##############");
+            Console.WriteLine("CC                #    #");
+            Console.WriteLine("CCCCCCCCCCCCCCCCC");
+            Console.WriteLine(); // Blank line for separation
+
+            // Exercise 3: Name and school
+            Console.WriteLine("Name:  Rebekah McKnight");
+            Console.WriteLine("Graduation Year:  2025");
+            Console.WriteLine("School: Chattanooga State Community College");
+            Console.WriteLine(); // Blank line for separation
+
+            // Exercise 4: Banner
+            Console.WriteLine("*****************************************");
+            Console.WriteLine("**   Programming Assignment # 1                  **");
+            Console.WriteLine("**   Developer: Rebekah McKnight                 **");
+            Console.WriteLine("**   Date Submitted: 08/26/2024                  **");
+            Console.WriteLine("**   Purpose: Demonstrate basic C# formatting    **");
+            Console.WriteLine("*****************************************");
+            Console.WriteLine(); // Blank line for separation
+
+            // Exercise 5: Listing
+            Console.WriteLine("*******************************************");
+            Console.WriteLine("**   Name: Rebekah McKnight                   **");
+            Console.WriteLine("**   Hometown: Pensacola, FL                  **");
+            Console.WriteLine("**   Major: Computer Programming              **");
+            Console.WriteLine("**   Hobby: Python Coding                    **");
+            Console.WriteLine("**   Favorite Activity: Playing with my dogs **");
+            Console.WriteLine("*******************************************");
+        }
+    }
+}
