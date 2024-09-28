@@ -1,0 +1,128 @@
+using System;
+
+
+namespace Chapter02
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            // Exercise 1: Convert miles to kilometers and smoots
+            ConvertMiles();
+
+            // Exercise 2: Convert Celsius to Fahrenheit
+            ConvertTemperature();
+
+            // Exercise 3: Calculate retail prices with markup
+            CalculateRetailPrices();
+
+            // Exercise 4: Calculate take-home pay
+            CalculateTakeHomePay();
+
+            // Exercise 5: Compute weighted average
+            ComputeWeightedAverage();
+        }
+
+        static void ConvertMiles()
+        {
+            // Convert miles to kilometers and smoots
+            double miles = 10; // Compile-time initialization
+            double kilometers = miles * 1.60934;
+            double smoots = miles * 5280 / 67; // There are 5280 feet in a mile and one smoot is 67 inches
+
+            Console.WriteLine("Exercise 1: Convert Miles to Kilometers and Smoots");
+            Console.WriteLine($"Miles: {miles}");
+            Console.WriteLine($"Kilometers: {kilometers:F2}");
+            Console.WriteLine($"Smoots: {smoots:F2}");
+            Console.WriteLine(); // Blank line for separation
+        }
+
+        static void ConvertTemperature()
+        {
+            // Convert Celsius to Fahrenheit
+            double celsius = 25; // Example Celsius value
+            double fahrenheit = celsius * 9 / 5 + 32;
+
+            Console.WriteLine("Exercise 2: Convert Celsius to Fahrenheit");
+            Console.WriteLine($"Celsius: {celsius}");
+            Console.WriteLine($"Fahrenheit: {fahrenheit:F2}");
+            Console.WriteLine(); // Blank line for separation
+        }
+
+        static void CalculateRetailPrices()
+        {
+            // Calculate retail prices with a 15% markup
+            string companyName1 = "Ruggy Shoes";
+            double wholesalePrice1 = 52.00;
+            double retailPrice1 = wholesalePrice1 * 1.15;
+
+            string companyName2 = "Teno Jacket";
+            double wholesalePrice2 = 71.00;
+            double retailPrice2 = wholesalePrice2 * 1.15;
+
+            Console.WriteLine("Exercise 3: Calculate Retail Prices with Markup");
+            Console.WriteLine($"Company: {companyName1}, Wholesale Price: {wholesalePrice1:C}, Retail Price: {retailPrice1:C}");
+            Console.WriteLine($"Company: {companyName2}, Wholesale Price: {wholesalePrice2:C}, Retail Price: {retailPrice2:C}");
+            Console.WriteLine(); // Blank line for separation
+        }
+
+        static void CalculateTakeHomePay()
+        {
+            // Calculate take-home pay for a commissioned sales employee
+            string employeeName = "Nesbith Lang";
+            double totalSales = 161432;
+            double commissionRate = 0.07;
+            double federalTaxRate = 0.18;
+            double retirementRate = 0.10;
+            double socialSecurityRate = 0.06;
+
+            double grossCommission = totalSales * commissionRate;
+            double federalTax = grossCommission * federalTaxRate;
+            double afterTaxEarnings = grossCommission - federalTax;
+            double retirementContribution = afterTaxEarnings * retirementRate;
+            double socialSecurityContribution = afterTaxEarnings * socialSecurityRate;
+            double takeHomePay = afterTaxEarnings - retirementContribution - socialSecurityContribution;
+
+            Console.WriteLine("Exercise 4: Calculate Take-Home Pay");
+            Console.WriteLine($"Employee Name: {employeeName}");
+            Console.WriteLine($"Gross Commission: {grossCommission:C}");
+            Console.WriteLine($"Federal Tax: {federalTax:C}");
+            Console.WriteLine($"After-Tax Earnings: {afterTaxEarnings:C}");
+            Console.WriteLine($"Retirement Contribution: {retirementContribution:C}");
+            Console.WriteLine($"Social Security Contribution: {socialSecurityContribution:C}");
+            Console.WriteLine($"Take-Home Pay: {takeHomePay:C}");
+            Console.WriteLine(); // Blank line for separation
+        }
+
+        static void ComputeWeightedAverage()
+        {
+            // Compute weighted average based on given scores and weights
+            double homeworkWeight = 0.10;
+            double projectsWeight = 0.35;
+            double quizzesWeight = 0.10;
+            double examsWeight = 0.30;
+            double finalExamWeight = 0.15;
+
+            double homeworkScore = 97;
+            double projectsScore = 82;
+            double quizzesScore = 60;
+            double examsScore = 75;
+            double finalExamScore = 80;
+
+            double weightedAverage = (homeworkScore * homeworkWeight) +
+                                     (projectsScore * projectsWeight) +
+                                     (quizzesScore * quizzesWeight) +
+                                     (examsScore * examsWeight) +
+                                     (finalExamScore * finalExamWeight);
+
+            Console.WriteLine("Exercise 5: Compute Weighted Average");
+            Console.WriteLine($"Homework: {homeworkScore}% (Weight: {homeworkWeight:P})");
+            Console.WriteLine($"Projects: {projectsScore}% (Weight: {projectsWeight:P})");
+            Console.WriteLine($"Quizzes: {quizzesScore}% (Weight: {quizzesWeight:P})");
+            Console.WriteLine($"Exams: {examsScore}% (Weight: {examsWeight:P})");
+            Console.WriteLine($"Final Exam: {finalExamScore}% (Weight: {finalExamWeight:P})");
+            Console.WriteLine($"Weighted Average: {weightedAverage:F2}%");
+            Console.WriteLine(); // Blank line for separation
+        }
+    }
+}
