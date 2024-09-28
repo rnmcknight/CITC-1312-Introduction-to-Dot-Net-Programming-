@@ -1,0 +1,231 @@
+using System;
+
+namespace Chapter05
+{
+  // 1. Aquarium pH Level Class
+    class AquariumPH
+    {
+        public void DisplayPHLevel()
+        {
+            Console.Write("Enter the aquarium's pH level (0-14): ");
+            double pH = Convert.ToDouble(Console.ReadLine());
+
+            if (pH < 0 || pH > 14)
+            {
+                Console.WriteLine("Invalid pH level. Please enter a value between 0 and 14.");
+            }
+            else if (pH < 7)
+            {
+                Console.WriteLine("The aquarium's water is acidic.");
+            }
+            else if (pH == 7)
+            {
+                Console.WriteLine("The aquarium's water is neutral.");
+            }
+            else
+            {
+                Console.WriteLine("The aquarium's water is alkaline.");
+            }
+        }
+    }
+
+    // 2. Month Class
+    class Month
+    {
+        public int MonthNumber { get; set; }
+
+        public Month(int monthNumber)
+        {
+            MonthNumber = monthNumber;
+        }
+
+        public string GetMonthName()
+        {
+            string[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+            return (MonthNumber >= 1 && MonthNumber <= 12) ? monthNames[MonthNumber - 1] : "Invalid month";
+        }
+
+        public int GetDaysInMonth()
+        {
+            int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+            return (MonthNumber >= 1 && MonthNumber <= 12) ? daysInMonth[MonthNumber - 1] : 0;
+        }
+
+        public override string ToString()
+        {
+            string monthName = GetMonthName();
+            int days = GetDaysInMonth();
+            return monthName == "Invalid month" ? "Invalid month number." : $"{monthName} has {days} days.";
+        }
+    }
+
+    // 3. BMI Calculator Class
+    class BMICalculator
+    {
+        public void CalculateBMI()
+        {
+            Console.Write("Enter your weight in kilograms: ");
+            double weight = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Enter your height in meters (max 2.72 meters): ");
+            double height = Convert.ToDouble(Console.ReadLine());
+
+            if (height > 2.72)
+            {
+                Console.WriteLine("Height cannot exceed 2.72 meters.");
+                return;
+            }
+
+            double bmi = weight / (height * height);
+            Console.WriteLine($"Your height: {height} meters, weight: {weight} kg, BMI: {bmi:F2}");
+
+            string status = bmi < 18.5 ? "Underweight" :
+                            bmi >= 18.5 && bmi <= 24.9 ? "Normal" :
+                            bmi >= 25 && bmi <= 29.9 ? "Overweight" : "Obese";
+
+            Console.WriteLine($"Weight Status: {status}");
+        }
+    }
+
+    // 4. Employee Take-Home Pay Classes
+    class Employee
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Id { get; set; }
+        public string Type { get; set; }
+
+        protected const decimal FEDERAL_TAX_RATE = 0.18M;
+        protected const decimal RETIREMENT_RATE = 0.10M;
+        protected const decimal SOCIAL_SECURITY_RATE = 0.06M;
+
+        public Employee(string firstName, string lastName, int id, string type)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Id = id;
+            Type = type;
+        }
+
+        public virtual decimal CalculateTakeHomePay()
+        {
+            return 0M; // To be overridden in derived classes
+        }
+
+        protected decimal DeductTaxes(decimal grossPay)
+        {
+            return grossPay - (grossPay * (FEDERAL_TAX_RATE + RETIREMENT_RATE + SOCIAL_SECURITY_RATE));
+        }
+
+        public override string ToString()
+        {
+            return $"Employee ID: {Id}, Name: {FirstName} {LastName}, Type: {Type}";
+        }
+    }
+
+    class SalariedEmployee : Employee
+    {
+        public decimal Salary { get; set; }
+
+        public SalariedEmployee(string firstName, string lastName, int id, decimal salary)
+            : base(firstName, lastName, id, "Salaried")
+        {
+            Salary = salary;
+        }
+
+        public override decimal CalculateTakeHomePay()
+        {
+            return DeductTaxes(Salary);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $", Salary: {Salary:C}, Take-home Pay: {CalculateTakeHomePay():C}";
+        }
+    }
+
+    class HourlyEmployee : Employee
+    {
+        public decimal HourlyRate { get; set; }
+        public int HoursWorked { get; set; }
+
+        public HourlyEmployee(string firstName, string lastName, int id, decimal hourlyRate, int hoursWorked)
+            : base(firstName, lastName, id, "Hourly")
+        {
+            HourlyRate = hourlyRate;
+            HoursWorked = hoursWorked;
+        }
+
+        public override decimal CalculateTakeHomePay()
+        {
+            decimal grossPay = HoursWorked > 40 ? (40 * HourlyRate) + ((HoursWorked - 40) * HourlyRate * 1.5M) : HoursWorked * HourlyRate;
+            return DeductTaxes(grossPay);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $", Hourly Rate: {HourlyRate:C}, Hours Worked: {HoursWorked}, Take-home Pay: {CalculateTakeHomePay():C}";
+        }
+    }
+
+    // Main Program to test all classes
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 1. Test Aquarium pH Level
+            AquariumPH aquariumPH = new AquariumPH();
+            aquariumPH.DisplayPHLevel();
+            Console.WriteLine();
+
+            // 2. Test Month Class
+            Console.Write("Enter a month number (1-12): ");
+            int monthNumber = Convert.ToInt32(Console.ReadLine());
+            Month month = new Month(monthNumber);
+            Console.WriteLine(month.ToString());
+            Console.WriteLine();
+
+            // 3. Test BMI Calculator
+            BMICalculator bmiCalculator = new BMICalculator();
+            bmiCalculator.CalculateBMI();
+            Console.WriteLine();
+
+            // 4. Test Employee Take-Home Pay
+            Console.Write("Enter employee's first name: ");
+            string firstName = Console.ReadLine();
+
+            Console.Write("Enter employee's last name: ");
+            string lastName = Console.ReadLine();
+
+            Console.Write("Enter employee's ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Is the employee salaried or hourly (s/h)? ");
+            string type = Console.ReadLine().ToLower();
+
+            if (type == "s")
+            {
+                Console.Write("Enter the salary amount: ");
+                decimal salary = Convert.ToDecimal(Console.ReadLine());
+
+                SalariedEmployee salariedEmployee = new SalariedEmployee(firstName, lastName, id, salary);
+                Console.WriteLine(salariedEmployee);
+            }
+            else if (type == "h")
+            {
+                Console.Write("Enter the hourly rate: ");
+                decimal hourlyRate = Convert.ToDecimal(Console.ReadLine());
+
+                Console.Write("Enter the number of hours worked: ");
+                int hoursWorked = Convert.ToInt32(Console.ReadLine());
+
+                HourlyEmployee hourlyEmployee = new HourlyEmployee(firstName, lastName, id, hourlyRate, hoursWorked);
+                Console.WriteLine(hourlyEmployee);
+            }
+            else
+            {
+                Console.WriteLine("Invalid employee type entered.");
+            }
+        }
+    }
+}
